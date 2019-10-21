@@ -1,23 +1,41 @@
 import React, {Component} from 'react';
 import {Text, View, Button} from 'react-native';
 
+import {bindActionCreators} from 'redux';
+import {connect} from 'react-redux';
+import {increment, decrement} from './actions/index';
 class Counter extends Component {
   addIncrement = () => {
-    console.log('tambah');
+    console.log(this.props.count);
+    this.props.incrementAction();;
   };
   minIncrement = () => {
-    console.log('kurang');
+  this.props.decrementAction();
+    console.log(this.props.count);
   };
   render() {
-    return (
+ return (
       <View>
         <Text>Contoh Redux</Text>
-        <Text>Counter :  </Text>
-        <Button title="Tambah" onPress= {this.addIncrement}/>
+        <Text>Counter :   {this.props.count}</Text>
+        <Button title="Tambah" onPress={this.addIncrement} />
         <Button title="Kurang" onPress={this.minIncrement} />
       </View>
     );
   }
 }
-
-export default Counter;
+function mapStateToProps(state) {
+  return {
+    count: state.count,
+  };
+}
+function matchDispatchToProps(dispatch) {
+  return bindActionCreators(
+    {incrementAction: increment, decrementAction: decrement},
+    dispatch,
+  );
+}
+export default connect(
+  mapStateToProps,
+  matchDispatchToProps,
+)(Counter);
