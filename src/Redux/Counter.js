@@ -1,22 +1,19 @@
 import React, {Component} from 'react';
 import {Text, View, Button} from 'react-native';
-
 import {bindActionCreators} from 'redux';
 import {connect} from 'react-redux';
 import {increment, decrement} from './actions/index';
 class Counter extends Component {
   addIncrement = () => {
-    console.log(this.props.count);
-    this.props.incrementAction();;
+    this.props.incrementAction();
   };
   minIncrement = () => {
-  this.props.decrementAction();
-    console.log(this.props.count);
+    this.props.decrementAction();
   };
   render() {
  return (
       <View>
-        <Text>Contoh Redux</Text>
+        <Text>Contoh Reduxs</Text>
         <Text>Counter :   {this.props.count}</Text>
         <Button title="Tambah" onPress={this.addIncrement} />
         <Button title="Kurang" onPress={this.minIncrement} />
@@ -25,11 +22,14 @@ class Counter extends Component {
   }
 }
 function mapStateToProps(state) {
+  // console.log('map state');
+  // console.log(state); // lihat data reducer 
   return {
     count: state.count,
   };
 }
-function matchDispatchToProps(dispatch) {
+function matchDispatchToProps(dispatch) {//   action menjadi props
+  //fungsi bindActionCreators combinasikan semua action ke single object
   return bindActionCreators(
     {incrementAction: increment, decrementAction: decrement},
     dispatch,
